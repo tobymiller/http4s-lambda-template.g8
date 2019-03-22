@@ -1,0 +1,25 @@
+service: $name;format="norm"$
+
+provider:
+  name: aws
+  runtime: java8
+  region: us-east-1
+  stage: dev
+
+package:
+  artifact: target/scala-2.12/$name;format="norm"$-assembly-0.0.1-SNAPSHOT.jar
+
+functions:
+  api:
+    handler: $package$.Service$Routes::handle
+    events:
+      - http:
+          path: "{proxy+}"
+          method: any
+          cors: true
+#      Uncomment below to keep the application warm
+#      - schedule:
+#          rate: rate(4 minutes)
+#          input:
+#            httpMethod: GET
+#            path: /hello/keepWarm
