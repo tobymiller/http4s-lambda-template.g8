@@ -11,7 +11,7 @@ package:
 
 functions:
   api:
-    handler: $package$.Service$Routes::handle
+    handler: $package$.Service\$Routes::handle
     events:
       - http:
           path: "{proxy+}"
