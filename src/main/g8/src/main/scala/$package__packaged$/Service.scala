@@ -15,7 +15,7 @@ import fs2.StreamApp
 
 object Service extends StreamApp[IO] with Http4sDsl[IO] {
   val service: HttpService[IO] = HttpService[IO] {
-    case GET -> Root \/ "hello" \/ name => Ok(s"Hello, \$name")
+    case GET -> Root / "hello" / name => Ok(s"Hello, \$name")
   }
 
   // used as entry point for serverless
@@ -27,6 +27,6 @@ object Service extends StreamApp[IO] with Http4sDsl[IO] {
   def stream(args: List[String], requestShutdown: IO[Unit]) =
     BlazeBuilder[IO]
       .bindHttp(8080, "0.0.0.0")
-      .mountService(Service.service, "\/")
+      .mountService(Service.service, "/")
       .serve
 }
